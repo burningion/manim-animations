@@ -2,9 +2,11 @@
 
 This is a repo for my manim animations.
 
-## Communication
+## Communication Animation
 
 [![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
+
+## Installation 
 
 This repo uses `uv` in order to manage dependencies.
 
