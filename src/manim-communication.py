@@ -12,7 +12,7 @@ class CommunicationModel(Scene):
         sender_field_color = ManimColor((241, 172, 75))
         receiver_field_color = ManimColor((75, 161, 241))
         box_color = ManimColor((159, 168,178))
-
+        
         person = Rectangle(height=2, width=3, color=GREEN, fill_opacity=0.4)
         person_encoder = Triangle(color=BLUE, fill_opacity=0.6).scale(2).rotate(-PI/2)  # Rotated 90 degrees
         shared_experience_text = MarkupText("Shared\nExperience", font="Helvetica").scale(.6).set_color(BLACK)
