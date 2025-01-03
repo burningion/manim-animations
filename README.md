@@ -2,6 +2,10 @@
 
 This is a repo for my manim animations.
 
+## Communication
+
+[![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
+
 This repo uses `uv` in order to manage dependencies.
 
 ```
@@ -17,4 +21,3 @@ $ uv run manim -r 800,600 --format=gif src/manim-communication.py CommunicationM
 
 Media files will be output into the `media/` directory.
 
-![Communication Animation](./assets/communication.gif)
