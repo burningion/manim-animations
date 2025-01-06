@@ -13,19 +13,24 @@ class CommunicationModel(Scene):
         receiver_field_color = ManimColor((75, 161, 241))
         box_color = ManimColor((159, 168,178))
         
-        person = Rectangle(height=2, width=3, color=GREEN, fill_opacity=0.4)
-        person_encoder = Triangle(color=BLUE, fill_opacity=0.6).scale(2).rotate(-PI/2)  # Rotated 90 degrees
+        person = RoundedRectangle(height=2, width=4, color=box_color, fill_opacity=1, corner_radius=.1)
+        person.stroke_color = BLACK
+        person_encoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(-PI/2)  # Rotated 90 degrees
+        person_encoder.stroke_color = BLACK
         shared_experience_text = MarkupText("Shared\nExperience", font="Helvetica").scale(.6).set_color(BLACK)
         shared_experience_text.move_to(ORIGIN + [0, -2.0, 0])
         # Create shapes for LLM side
-        llm = Rectangle(height=2, width=3, color=RED, fill_opacity=0.4)
-        llm_decoder = Triangle(color=ORANGE, fill_opacity=0.4).scale(2).rotate(PI/2)  # Rotated -90 degrees
-        
+        llm = RoundedRectangle(height=2, width=4, color=box_color, fill_opacity=1, corner_radius=.1)
+        llm.stroke_color = BLACK
+        llm_decoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(PI/2)  # Rotated -90 degrees
+        llm_decoder.stroke_color = BLACK
+
         person_text = MarkupText("Sender's Field of Experience", font="Helvetica").scale(.6).set_color(BLACK)
         llm_text = MarkupText("Receiver's Field of Experience", font="Helvetica").scale(.6).set_color(BLACK)
 
         # Create signal rectangle
-        signal = RoundedRectangle(height=1.5, width=2, color=PURPLE, fill_opacity=0.5, corner_radius=.2)
+        signal = RoundedRectangle(height=1.5, width=2, color=box_color, fill_opacity=1, corner_radius=.1)
+        signal.stroke_color = BLACK
         signal_text = MarkupText("<b>Signal</b>", font="Helvetica").scale(0.8).set_color(WHITE)
         signal_group = VGroup(signal, signal_text)
         
@@ -34,11 +39,11 @@ class CommunicationModel(Scene):
         llm_context = Ellipse(width=12, height=8, color=receiver_field_color, fill_opacity=.6)
         
         # Position all elements
-        person.move_to(LEFT * 7.5)
+        person.move_to(LEFT * 6)
         person_text.move_to(LEFT * 5 + [.5, -2.5, 0])
         person_encoder.next_to(person, RIGHT, buff=0)  # Reduced buffer to touch
         
-        llm.move_to(RIGHT * 7.5) 
+        llm.move_to(RIGHT * 6) 
         llm_text.move_to(RIGHT * 5 + [-.3, -2.5, 0])
         llm_decoder.next_to(llm, LEFT, buff=0)        # Reduced buffer to touch
         
@@ -52,8 +57,8 @@ class CommunicationModel(Scene):
         llm_label = MarkupText("<b>Receiver</b>", font="Helvetica").scale(0.7).move_to(llm)
         
         # Add encoder/decoder labels
-        person_encoder_label = MarkupText("<b>Encoder</b>", font="Helvetica", color=WHITE).scale(0.8).move_to(person_encoder)
-        llm_decoder_label = MarkupText("<b>Decoder</b>", font="Helvetica", color=WHITE).scale(0.8).move_to(llm_decoder)
+        person_encoder_label = MarkupText("<b>Encode</b>", font="Helvetica", color=WHITE).scale(0.5).move_to(person_encoder)
+        llm_decoder_label = MarkupText("<b>Decode</b>", font="Helvetica", color=WHITE).scale(0.5).move_to(llm_decoder)
         
         line1 = Arrow(person_encoder, signal.get_left(), buff=0, color=BLACK)    
         line2 = Arrow(signal.get_right(), llm_decoder, buff=0, color=BLACK)
@@ -81,8 +86,8 @@ class CommunicationModel(Scene):
         self.play(
             Create(message_star),
             Write(message_label),
-            person.animate.set_fill(GREEN, opacity=0.8),
-            run_time=0.5
+            person.animate.set_fill(GREEN, opacity=1),
+            run_time=1
         )
         self.wait(0.5)
         
@@ -90,8 +95,9 @@ class CommunicationModel(Scene):
         self.play(
             message_star.animate.move_to(person_encoder.get_center() + [0, -.5, 0]).set_color(YELLOW),
             message_label.animate.move_to(person_encoder.get_center() + label_offset),
-            person_encoder.animate.set_fill(BLUE, opacity=0.8),
-            person_encoder_label.animate.set_color(WHITE),
+            person_encoder.animate.set_fill(BLUE, opacity=1),
+            person_encoder_label.animate.set_fill(WHITE),
+            person.animate.set_fill(box_color),
             run_time=1
         )
         self.wait(0.5)
@@ -107,6 +113,7 @@ class CommunicationModel(Scene):
             message_star.animate.move_to(signal.get_center() + [0, -.5, 0]).set_stroke(width=1, color=BLACK),
             message_label.animate.move_to(signal.get_center() + label_offset),
             signal.animate.set_fill(PURPLE, opacity=0.9),
+            person_encoder.animate.set_fill(box_color),
             run_time=1
         )
         self.wait(0.5)
@@ -116,7 +123,7 @@ class CommunicationModel(Scene):
             message_star.animate.move_to(llm_decoder.get_center() + [0, -.5, 0]),
             message_label.animate.move_to(llm_decoder.get_center() + label_offset),
             llm_decoder.animate.set_fill(ORANGE, opacity=0.8),
-            llm_decoder_label.animate.set_color(WHITE),
+            signal.animate.set_fill(box_color),
             run_time=1
         )
         self.wait(0.5)
@@ -131,18 +138,14 @@ class CommunicationModel(Scene):
             message_star.animate.next_to(llm, DOWN, buff=0.3).set_color(WHITE).set_stroke(width=1, color=BLACK),
             message_label.animate.next_to(llm, DOWN, buff=0.9),
             llm.animate.set_fill(RED, opacity=0.8),
+            llm_decoder.animate.set_fill(box_color),
             run_time=1
         )
         self.wait(0.5)
         
         # Reset colors
         self.play(
-            person.animate.set_opacity(.4),
-            person_encoder.animate.set_opacity(.4),
-            #signal.animate.set_fill(opacity=0),
-            llm_decoder.animate.set_opacity(.4),
-            signal.animate.set_opacity(.5),
-            llm.animate.set_opacity(.4),  
+            llm.animate.set_fill(box_color),  
             message_star.animate.set_opacity(0),
             message_label.animate.set_opacity(0),
             run_time=1
