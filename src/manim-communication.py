@@ -8,9 +8,13 @@ config.default_font = "Andale Mono"
 
 class CommunicationModel(Scene):
     def construct(self):
+        #self.camera.background_color = (230, 230, 230)
         # Create shapes for person side
+
         sender_field_color = ManimColor((241, 172, 75))
+        sender_end_color = ManimColor((181, 129, 56))
         receiver_field_color = ManimColor((75, 161, 241))
+        receiver_end_color = ManimColor((56, 121, 181)) 
         box_color = ManimColor((159, 168,178))
         
         person = RoundedRectangle(height=2, width=4, color=box_color, fill_opacity=1, corner_radius=.1)
@@ -35,8 +39,8 @@ class CommunicationModel(Scene):
         signal_group = VGroup(signal, signal_text)
         
         # Create context ellipses
-        person_context = Ellipse(width=12, height=8, color=sender_field_color, fill_opacity=.6)
-        llm_context = Ellipse(width=12, height=8, color=receiver_field_color, fill_opacity=.6)
+        person_context = Ellipse(width=12, height=8, color=[sender_field_color, sender_end_color], fill_opacity=.7)
+        llm_context = Ellipse(width=12, height=8, color=[receiver_field_color, receiver_end_color], fill_opacity=.7)
         
         # Position all elements
         person.move_to(LEFT * 6)
