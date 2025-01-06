@@ -12,9 +12,9 @@ class CommunicationModel(Scene):
         # Create shapes for person side
 
         sender_field_color = ManimColor((241, 172, 75))
-        sender_end_color = ManimColor((181, 129, 56))
+        sender_end_color = ManimColor((151, 108, 47))
         receiver_field_color = ManimColor((75, 161, 241))
-        receiver_end_color = ManimColor((56, 121, 181)) 
+        receiver_end_color = ManimColor((47, 101, 151))
         box_color = ManimColor((159, 168,178))
         
         person = RoundedRectangle(height=2, width=4, color=box_color, fill_opacity=1, corner_radius=.1)
@@ -29,8 +29,8 @@ class CommunicationModel(Scene):
         llm_decoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(PI/2)  # Rotated -90 degrees
         llm_decoder.stroke_color = BLACK
 
-        person_text = MarkupText("Sender's Field of Experience", font="Helvetica").scale(.6).set_color(BLACK)
-        llm_text = MarkupText("Receiver's Field of Experience", font="Helvetica").scale(.6).set_color(BLACK)
+        person_text = MarkupText("Sender's Field of Experience", font="Helvetica").scale(.7).set_color(BLACK)
+        llm_text = MarkupText("Receiver's Field of Experience", font="Helvetica").scale(.7).set_color(BLACK)
 
         # Create signal rectangle
         signal = RoundedRectangle(height=1.5, width=2, color=box_color, fill_opacity=1, corner_radius=.1)
@@ -39,16 +39,16 @@ class CommunicationModel(Scene):
         signal_group = VGroup(signal, signal_text)
         
         # Create context ellipses
-        person_context = Ellipse(width=12, height=8, color=[sender_field_color, sender_end_color], fill_opacity=.7)
-        llm_context = Ellipse(width=12, height=8, color=[receiver_field_color, receiver_end_color], fill_opacity=.7)
+        person_context = Ellipse(width=12, height=8, color=sender_field_color, fill_opacity=.7).set_fill(color=[sender_field_color, sender_end_color]).set_stroke(width=10, color=sender_field_color)
+        llm_context = Ellipse(width=12, height=8, color=receiver_field_color, fill_opacity=.7).set_fill(color=[receiver_field_color, receiver_end_color]).set_stroke(width=10, color=receiver_field_color)
         
         # Position all elements
         person.move_to(LEFT * 6)
-        person_text.move_to(LEFT * 5 + [.5, -2.5, 0])
+        person_text.move_to(LEFT * 5 + [.2, -2.5, 0])
         person_encoder.next_to(person, RIGHT, buff=0)  # Reduced buffer to touch
         
         llm.move_to(RIGHT * 6) 
-        llm_text.move_to(RIGHT * 5 + [-.3, -2.5, 0])
+        llm_text.move_to(RIGHT * 5 + [-.2, -2.5, 0])
         llm_decoder.next_to(llm, LEFT, buff=0)        # Reduced buffer to touch
         
         signal_group.move_to(ORIGIN)
@@ -57,12 +57,12 @@ class CommunicationModel(Scene):
         llm_context.move_to(RIGHT * 3.3)
         
         # Add labels
-        person_label = MarkupText("<b>Sender</b>", font="Helvetica").scale(0.7).move_to(person)
-        llm_label = MarkupText("<b>Receiver</b>", font="Helvetica").scale(0.7).move_to(llm)
+        person_label = MarkupText("<b>Sender</b>", font="Helvetica", color=BLACK).scale(0.7).move_to(person)
+        llm_label = MarkupText("<b>Receiver</b>", font="Helvetica", color=BLACK).scale(0.7).move_to(llm)
         
         # Add encoder/decoder labels
-        person_encoder_label = MarkupText("<b>Encode</b>", font="Helvetica", color=WHITE).scale(0.5).move_to(person_encoder)
-        llm_decoder_label = MarkupText("<b>Decode</b>", font="Helvetica", color=WHITE).scale(0.5).move_to(llm_decoder)
+        person_encoder_label = MarkupText("<b>Encode</b>", font="Helvetica").scale(0.5).move_to(person_encoder)
+        llm_decoder_label = MarkupText("<b>Decode</b>", font="Helvetica").scale(0.5).move_to(llm_decoder)
         
         line1 = Arrow(person_encoder, signal.get_left(), buff=0, color=BLACK)    
         line2 = Arrow(signal.get_right(), llm_decoder, buff=0, color=BLACK)
@@ -73,7 +73,7 @@ class CommunicationModel(Scene):
         
         # Create message dot that will travel through the system
         message = Dot(color=WHITE, radius=0.2)
-        message.next_to(person, DOWN, buff=0.3)
+        message.next_to(person, LEFT, buff=-1)
         message_star = Star(color=WHITE, fill_opacity=1, stroke_width=1, stroke_color=BLACK).scale(0.3).move_to(message)
         message_star_copy = message_star.copy()
         message_star_copy.move_to(llm_decoder.get_center() + [0, -.5, 0]).set_color(YELLOW)
@@ -139,8 +139,8 @@ class CommunicationModel(Scene):
 
         # 6. Message arrives at LLM
         self.play(
-            message_star.animate.next_to(llm, DOWN, buff=0.3).set_color(WHITE).set_stroke(width=1, color=BLACK),
-            message_label.animate.next_to(llm, DOWN, buff=0.9),
+            message_star.animate.next_to(llm, RIGHT, buff=-1).set_color(WHITE).set_stroke(width=1, color=BLACK),
+            message_label.animate.next_to(llm.get_center() + label_offset + [0, .5, 0]),
             llm.animate.set_fill(RED, opacity=0.8),
             llm_decoder.animate.set_fill(box_color),
             run_time=1
