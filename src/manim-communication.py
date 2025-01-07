@@ -29,8 +29,8 @@ class CommunicationModel(Scene):
         llm_decoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(PI/2)  # Rotated -90 degrees
         llm_decoder.stroke_color = BLACK
 
-        person_text = MarkupText("Sender's Field of Experience", font="Helvetica").scale(.7).set_color(BLACK)
-        llm_text = MarkupText("Receiver's Field of Experience", font="Helvetica").scale(.7).set_color(BLACK)
+        person_text = MarkupText("<b>Sender's Field of Experience</b>", font="Helvetica").scale(.6).set_color(BLACK)
+        llm_text = MarkupText("<b>Receiver's Field of Experience</b>", font="Helvetica").scale(.6).set_color(BLACK)
 
         # Create signal rectangle
         signal = RoundedRectangle(height=1.5, width=2, color=box_color, fill_opacity=1, corner_radius=.1)
@@ -77,9 +77,9 @@ class CommunicationModel(Scene):
         message = SVGMobject("mailb.svg").scale(0.3)
         message_star = SVGMobject("letterb.svg").scale(0.5).next_to(person, LEFT, buff=-1)
         message_star_copy = message_star.copy()
-        message_star_copy.move_to(llm_decoder.get_center() + [0, -1, 0])
+        message_star_copy.move_to(llm_decoder.get_center() + [0, -1.3, 0])
         message_label = MarkupText("<b></b>", font="Helvetica", color=BLACK).scale(0.5).next_to(message, DOWN, buff=0.3)
-        message.move_to(person_encoder.get_center() + [0, -1, 0])
+        message.move_to(person_encoder.get_center() + [0, -1.3, 0])
         # Initial setup animation
         self.add(llm_context, person_context, person, llm, person_text, llm_text,
                     person_encoder, llm_decoder, signal_group, person_label, llm_label,
@@ -98,7 +98,7 @@ class CommunicationModel(Scene):
         
         # 2. Message moves to encoder
         self.play(
-            message_star.animate.move_to(person_encoder.get_center() + [0, -1., 0]),
+            message_star.animate.move_to(person_encoder.get_center() + [0, -1.3, 0]),
             message_label.animate.move_to(person_encoder.get_center() + label_offset),
             person_encoder.animate.set_fill(BLUE, opacity=1),
             person_encoder_label.animate.set_fill(WHITE),
@@ -114,7 +114,7 @@ class CommunicationModel(Scene):
         
         # 4. Message moves to signal
         self.play(
-            message_star.animate.move_to(signal.get_center() + [0, -1.05, 0]).set_stroke(width=1, color=BLACK),
+            message_star.animate.move_to(signal.get_center() + [0, -1.15, 0]).set_stroke(width=1, color=BLACK),
             message_label.animate.move_to(signal.get_center() + label_offset),
             signal.animate.set_fill(PURPLE, opacity=0.9),
             person_encoder.animate.set_fill(box_color),
@@ -125,7 +125,7 @@ class CommunicationModel(Scene):
         
         # 5. Message moves to decoder
         self.play(
-            message_star.animate.move_to(llm_decoder.get_center() + [0, -1, 0]),
+            message_star.animate.move_to(llm_decoder.get_center() + [0, -1.3, 0]),
             message_label.animate.move_to(llm_decoder.get_center() + label_offset),
             llm_decoder.animate.set_fill(ORANGE, opacity=0.8),
             signal.animate.set_fill(box_color),
