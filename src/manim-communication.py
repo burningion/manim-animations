@@ -128,6 +128,7 @@ class CommunicationModel(Scene):
             message_star.animate.move_to(llm_decoder.get_center() + [0, -1, 0]),
             message_label.animate.move_to(llm_decoder.get_center() + label_offset),
             llm_decoder.animate.set_fill(ORANGE, opacity=0.8),
+            signal.animate.set_fill(box_color),
             run_time=1
         )
         self.wait(0.5)
@@ -142,7 +143,7 @@ class CommunicationModel(Scene):
             message_star.animate.next_to(llm, RIGHT, buff=-1).set_color(BLACK),
             message_label.animate.next_to(llm.get_center() + label_offset + [0, .5, 0]),
             llm.animate.set_fill(RED, opacity=0.8),
-            signal.animate.set_fill(box_color),
+            
             run_time=1
         )
         self.wait(0.5)
