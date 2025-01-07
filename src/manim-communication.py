@@ -100,7 +100,7 @@ class CommunicationModel(Scene):
                 )
             ),
             person_context.animate.scale(1.1),
-            Flash(person_context, color=receiver_field_color, flash_radius=0.3),
+            Flash(perception, color=receiver_field_color, flash_radius=1.2),
             ApplyWave(person_context, direction=RIGHT, amplitude=0.3),
             Create(message_star),
             Write(message_label),
@@ -130,7 +130,7 @@ class CommunicationModel(Scene):
         self.play(
             message_star.animate.move_to(signal.get_center() + [0, -1.15, 0]).set_stroke(width=1, color=BLACK),
             message_label.animate.move_to(signal.get_center() + label_offset),
-            signal.animate.set_fill(PURPLE, opacity=0.9),
+            signal.animate.set_fill(PURPLE, opacity=1),
             person_encoder.animate.set_fill(box_color),
             person.animate.set_fill(box_color),
             run_time=1
@@ -175,7 +175,7 @@ class CommunicationModel(Scene):
                 )
             ),
             llm_context.animate.scale(1.1),
-            Flash(llm_context, color=sender_field_color, flash_radius=0.3),
+            Flash(perception2, color=sender_field_color, flash_radius=1.2),
             ApplyWave(llm_context, direction=LEFT, amplitude=0.3),
             llm.animate.set_fill(box_color),  
             llm_decoder.animate.set_fill(box_color),
