@@ -71,19 +71,20 @@ class CommunicationModel(Scene):
         #person_encoder_label.next_to(person_encoder, UP, buff=0.3)
         #llm_decoder_label.next_to(llm_decoder, UP, buff=0.3)
         
+        perception = SVGMobject("perception.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0])
+        perception2 = perception.copy().move_to(llm_context.get_center() + [.5, 2.4, 0]).stretch(factor=-1, dim=0)
         # Create message dot that will travel through the system
         message = SVGMobject("mailb.svg").scale(0.3)
-        message.next_to(person, LEFT, buff=-1)
-        message_star = SVGMobject("letterb.svg").scale(0.5).move_to(message)
+        message_star = SVGMobject("letterb.svg").scale(0.5).next_to(person, LEFT, buff=-1)
         message_star_copy = message_star.copy()
         message_star_copy.move_to(llm_decoder.get_center() + [0, -1, 0])
         message_label = MarkupText("<b></b>", font="Helvetica", color=BLACK).scale(0.5).next_to(message, DOWN, buff=0.3)
-        message.move_to(person_encoder.get_center() + [0, -.5, 0])
+        message.move_to(person_encoder.get_center() + [0, -1, 0])
         # Initial setup animation
         self.add(llm_context, person_context, person, llm, person_text, llm_text,
                     person_encoder, llm_decoder, signal_group, person_label, llm_label,
                     person_encoder_label, llm_decoder_label, shared_experience_text,
-                    line1, line2)
+                    line1, line2, perception, perception2)
         self.wait(0.5)
         label_offset = [0, -.9, 0]
         # 1. Message starts in person (highlight person)
@@ -97,7 +98,7 @@ class CommunicationModel(Scene):
         
         # 2. Message moves to encoder
         self.play(
-            message_star.animate.move_to(person_encoder.get_center() + [0, -1, 0]),
+            message_star.animate.move_to(person_encoder.get_center() + [0, -1., 0]),
             message_label.animate.move_to(person_encoder.get_center() + label_offset),
             person_encoder.animate.set_fill(BLUE, opacity=1),
             person_encoder_label.animate.set_fill(WHITE),
