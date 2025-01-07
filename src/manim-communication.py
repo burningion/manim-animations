@@ -89,12 +89,26 @@ class CommunicationModel(Scene):
         label_offset = [0, -.9, 0]
         # 1. Message starts in person (highlight person)
         self.play(
+            UpdateFromAlphaFunc(
+                person_context,
+                lambda m, alpha: m.set_fill(
+                    color=[
+                        interpolate_color(sender_field_color, receiver_field_color, alpha),
+                        interpolate_color(sender_end_color, receiver_end_color, alpha)
+                    ],
+                    opacity=1
+                )
+            ),
+            person_context.animate.scale(1.1),
+            Flash(person_context, color=receiver_field_color, flash_radius=0.3),
+            ApplyWave(person_context, direction=RIGHT, amplitude=0.3),
             Create(message_star),
             Write(message_label),
             person.animate.set_fill(GREEN, opacity=1),
             run_time=1
         )
         self.wait(0.5)
+
         
         # 2. Message moves to encoder
         self.play(
@@ -150,11 +164,28 @@ class CommunicationModel(Scene):
         
         # Reset colors
         self.play(
+        UpdateFromAlphaFunc(
+                llm_context,
+                lambda m, alpha: m.set_fill(
+                    color=[
+                        interpolate_color(receiver_field_color, receiver_end_color, alpha),
+                        interpolate_color(receiver_end_color, receiver_field_color, alpha)
+                    ],
+                    opacity=1
+                )
+            ),
+            llm_context.animate.scale(1.1),
+            Flash(llm_context, color=sender_field_color, flash_radius=0.3),
+            ApplyWave(llm_context, direction=LEFT, amplitude=0.3),
             llm.animate.set_fill(box_color),  
-            message_star.animate.set_opacity(0),
             llm_decoder.animate.set_fill(box_color),
             message_label.animate.set_opacity(0),
             run_time=1
+        )
+
+        self.play(
+            message_star.animate.set_opacity(0),
+            run_time=.5
         )
         
         self.wait(1)
