@@ -21,7 +21,7 @@ class CommunicationModel(Scene):
         person.stroke_color = BLACK
         person_encoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(-PI/2)  # Rotated 90 degrees
         person_encoder.stroke_color = BLACK
-        shared_experience_text = MarkupText("Shared\nExperience", font="Helvetica").scale(.6).set_color(BLACK)
+        shared_experience_text = MarkupText("<b>Shared\nExperience</b>", font="Helvetica").scale(.6).set_color(BLACK)
         shared_experience_text.move_to(ORIGIN + [0, -2.0, 0])
         # Create shapes for LLM side
         llm = RoundedRectangle(height=2, width=4, color=box_color, fill_opacity=1, corner_radius=.1)
