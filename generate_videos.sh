@@ -5,3 +5,6 @@ uv run manim  --resolution "1280,720" src/manim-communication.py CommunicationMo
 uv run manim -r 800,600 --format=gif src/media-decision.py DecisionTreeAnimation
 cp media/videos/media-decision/600p60/DecisionTreeAnimation_ManimCE_v0.18.1.gif ./assets/media-decision.gif
 uv run manim  --resolution "1280,720" src/media-decision.py DecisionTreeAnimation
+uv run manim -r 800,600 --format=gif src/radar-chart.py MultipleRadarCharts
+cp media/videos/radar-chart/600p60/MultipleRadarCharts_ManimCE_v0.18.1.gif ./assets/radar-chart.gif
+uv run manim  --resolution "1280,720" src/radar-chart.py MultipleRadarCharts

@@ -8,6 +8,8 @@ This is a repo for my manim animations.
 
 [![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
 
+[![Radar Chart](./assets/radar-chart.gif)](./src/radar-chart.py)
+
 ## Installation 
 
 This repo uses `uv` in order to manage dependencies.
