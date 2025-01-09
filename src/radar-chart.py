@@ -8,7 +8,7 @@ class RadarChart(Scene):
         axis_color=BLACK,
         polygon_color=BLUE,
         polygon_opacity=0.3,
-        circle_color=GREY_A,
+        circle_color=GREY_B,
         label_size=12,
         **kwargs
     ):
@@ -118,27 +118,27 @@ class MultipleRadarCharts(Scene):
         datasets = [
             {
                 '<b>Attention</b>': 0.8,
-                '<b>Pace</b>': 0.7,
+                '<b>Pace</b>': 0.9,
                 '<b>Interactivity</b>': 0.9,
-                '<b>Rewards</b>': 0.6,
-                '<b>Social\nValue</b>': 0.75,
-                '<b>Randomness</b>': 0.85
+                '<b>Rewards</b>': 0.5,
+                '<b>Social\nValue</b>': 0.7,
+                '<b>Randomness</b>': 0.9
             },
             {
                 '<b>Attention</b>': 0.9,
-                '<b>Pace</b>': 0.85,
-                '<b>Interactivity</b>': 0.7,
-                '<b>Rewards</b>': 0.8,
-                '<b>Social\nValue</b>': 0.9,
-                '<b>Randomness</b>': 0.75
+                '<b>Pace</b>': 0.1,
+                '<b>Interactivity</b>': 0.2,
+                '<b>Rewards</b>': 0.9,
+                '<b>Social\nValue</b>': 0.4,
+                '<b>Randomness</b>': 0.3
             },
             {
-                '<b>Attention</b>': 0.6,
+                '<b>Attention</b>': 0.95,
                 '<b>Pace</b>': 0.9,
-                '<b>Interactivity</b>': 0.8,
-                '<b>Rewards</b>': 0.85,
-                '<b>Social\nValue</b>': 0.7,
-                '<b>Randomness</b>': 0.9
+                '<b>Interactivity</b>': 0.9,
+                '<b>Rewards</b>': 0.6,
+                '<b>Social\nValue</b>': 0.8,
+                '<b>Randomness</b>': 0.4
             }
         ]
         
@@ -179,17 +179,20 @@ class MultipleRadarCharts(Scene):
             radar.final_mobjects.shift(config['position'])
             
             # Add title
-            title = Text(
+            title = MarkupText(
                 chart_names[configurations.index(config)],
                 color=BLACK,
-                font_size=36
+                font_size=36,
             ).next_to(radar.final_mobjects, UP)
             
             # Add everything to the scene
-            self.add(radar.final_mobjects)
-            self.add(title)
+            self.play(
+                Create(radar.final_mobjects),
+                Write(title),
+                run_time=2
+            )
         
-        self.wait(2)
+        self.wait(10)
 
 # To render:
 # manim -pql scene_file.py MultipleRadarCharts
