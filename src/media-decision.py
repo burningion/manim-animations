@@ -11,7 +11,7 @@ class DecisionTreeAnimation(Scene):
 
         # Create the initial bottom nodes
         options = ["<b>TV Show</b>", "<b>Movie Theater</b>", "<b>Social Media</b>"]
-        scores = ["Commitment: 30-60mins\n\nRewards: 6", "Commitment: 1-2.5 hrs\n\nRewards: 7.5", "Commitment: 15s-3.5hrs\n\nRewards: ??"]
+        scores = ["Commitment: 30-60mins\n\nRewards: 6\n\nAttention Cost: 5", "Commitment: 1-2.5 hrs\n\nRewards: 7.5\n\nAttention Cost: 8", "Commitment: 15s-3.5hrs\n\nRewards: ??\n\nAttention Cost: 4"]
         filenames = ["../video_assets/tv-show.svg", "../video_assets/movie-theater.svg", "../video_assets/social-media.svg"]
         bottom_circles = VGroup(*[SVGMobject(file).scale(.5) for file in filenames])
         bottom_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica") for text in options])
@@ -90,7 +90,7 @@ class DecisionTreeAnimation(Scene):
 
         # Create new elements for Books and Podcast
         new_options = ["<b>Book</b>", "<b>Podcast</b>"]
-        new_scores = ["Commitment: 30+ hrs (??)\n\nRewards: 6-10", "Commitment: 30-60mins\n\nRewards: 6"]
+        new_scores = ["Commitment: 30+ hrs (??)\n\nRewards: 6-10\n\nAttention Cost: 9", "Commitment: 30-60mins\n\nRewards: 6\n\nAttention Cost: 3"]
         new_filenames = ["../video_assets/books.svg", "../video_assets/podcast.svg"]
         
         # Create new elements starting small and invisible
