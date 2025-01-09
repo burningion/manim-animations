@@ -11,14 +11,14 @@ class DecisionTreeAnimation(Scene):
 
         # Create the bottom nodes
         options = ["<b>TV Show</b>", "<b>Movie Theater</b>", "<b>Social Media</b>"]
-        scores = ["Commitment: 4\nReward: 6", "Commitment: 8\nReward: 7.5", "Commitment: 1\nReward: ??"]
+        scores = ["Commitment: 4\n\nReward: 6", "Commitment: 8\n\nReward: 7.5", "Commitment: 1\n\nReward: ??"]
         filenames = ["../video_assets/tv-show.svg", "../video_assets/movie-theater.svg", "../video_assets/social-media.svg"]
         bottom_circles = VGroup(*[SVGMobject(file).scale(.5) for file in filenames])
         bottom_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica") for text in options])
         score_texts = VGroup(*[MarkupText(score, font_size=20, color=BLACK, font="Helvetica") for score in scores])
         
         # Position bottom nodes
-        bottom_circles.arrange(RIGHT, buff=1.5)
+        bottom_circles.arrange(RIGHT, buff=3)
         bottom_circles.shift(DOWN * 2.5)
         
         for text, circle, score in zip(bottom_texts, bottom_circles, score_texts):
