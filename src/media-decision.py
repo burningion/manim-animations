@@ -90,14 +90,14 @@ class DecisionTreeAnimation(Scene):
 
         # Create new elements for Books and Podcast
         new_options = ["<b>Book</b>", "<b>Podcast</b>"]
-        new_scores = ["Score: 9/10", "Score: 8/10"]
+        new_scores = ["Commitment: 30+ hrs (??)\n\nRewards: 6-10", "Commitment: 30-60mins\n\nRewards: 6"]
         new_filenames = ["../video_assets/books.svg", "../video_assets/podcast.svg"]
         
         # Create new elements starting small and invisible
         new_circles = VGroup(*[SVGMobject(file).scale(0.1) for file in new_filenames])  # Start very small
         new_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica").set_opacity(0) 
                             for text in new_options])
-        new_score_texts = VGroup(*[Text(score, font_size=20, color=BLACK, font="Helvetica") .set_opacity(0) 
+        new_score_texts = VGroup(*[MarkupText(score, font_size=20, color=BLACK, font="Helvetica") .set_opacity(0) 
                                  for score in new_scores])
 
         # Position new elements at the same x-coordinates as the elements they're replacing
@@ -109,14 +109,26 @@ class DecisionTreeAnimation(Scene):
 
         # Fade out old elements (first two groups) and fade in/expand new ones
         for i in range(2):  # Only replace first two groups
-            self.play(
-                FadeOut(bottom_groups[i]),
-                new_texts[i].animate.set_opacity(1),
-                new_score_texts[i].animate.set_opacity(1),
-                new_circles[i].animate.scale(5),  # Scale up to final size
-                run_time=1
-            )
+            if i == 1:
+                self.play(
+                    FadeOut(bottom_groups[i]),
+                    new_texts[0].animate.set_opacity(1),
+                    new_score_texts[0].animate.set_opacity(1),
+                    new_circles[i].animate.scale(5),  # Scale up to final size
+                    run_time=1
+                )
+            else:
+                self.play(
+                    FadeOut(bottom_groups[i]),
+                    new_circles[i].animate.scale(5),
+                    run_time=1
+                )
 
+        self.play(
+                new_texts[1].animate.set_opacity(1),
+                new_score_texts[1].animate.set_opacity(1),
+                run_time=1
+        )
         self.wait(2)
 if __name__ == "__main__":
     # Command to render:
