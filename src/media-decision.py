@@ -3,7 +3,7 @@ class DecisionTreeAnimation(Scene):
     def construct(self):
         # Create the decision circle at the top
         self.camera.background_color = WHITE
-        decision_circle = SVGMobject("../video_assets/decision.svg")
+        decision_circle = SVGMobject("./video_assets/decision.svg")
         decision_text = MarkupText("<b>Media Decision</b>", font="Helvetica", font_size=36, color=BLACK)
         decision_text.next_to(decision_circle, DOWN, buff=.5)
         decision_group = VGroup(decision_circle, decision_text)
@@ -12,7 +12,7 @@ class DecisionTreeAnimation(Scene):
         # Create the initial bottom nodes
         options = ["<b>TV Show</b>", "<b>Movie Theater</b>", "<b>Social Media</b>"]
         scores = ["Commitment: 30-60mins\n\nRewards: 6\n\nAttention Cost: 5", "Commitment: 1-2.5 hrs\n\nRewards: 7.5\n\nAttention Cost: 8", "Commitment: 15s-3.5hrs\n\nRewards: ??\n\nAttention Cost: 4"]
-        filenames = ["../video_assets/tv-show.svg", "../video_assets/movie-theater.svg", "../video_assets/social-media.svg"]
+        filenames = ["./video_assets/tv-show.svg", "./video_assets/movie-theater.svg", "./video_assets/social-media.svg"]
         bottom_circles = VGroup(*[SVGMobject(file).scale(.5) for file in filenames])
         bottom_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica") for text in options])
         score_texts = VGroup(*[Text(score, font_size=20, color=BLACK, font="Helvetica") for score in scores])
@@ -91,7 +91,7 @@ class DecisionTreeAnimation(Scene):
         # Create new elements for Books and Podcast
         new_options = ["<b>Book</b>", "<b>Podcast</b>"]
         new_scores = ["Commitment: 30+ hrs (??)\n\nRewards: 6-10\n\nAttention Cost: 9", "Commitment: 30-60mins\n\nRewards: 6\n\nAttention Cost: 3"]
-        new_filenames = ["../video_assets/books.svg", "../video_assets/podcast.svg"]
+        new_filenames = ["./video_assets/books.svg", "./video_assets/podcast.svg"]
         
         # Create new elements starting small and invisible
         new_circles = VGroup(*[SVGMobject(file).scale(0.1) for file in new_filenames])  # Start very small
