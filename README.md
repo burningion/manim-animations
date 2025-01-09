@@ -6,6 +6,8 @@ This is a repo for my manim animations.
 
 [![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
 
+[![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
+
 ## Installation 
 
 This repo uses `uv` in order to manage dependencies.

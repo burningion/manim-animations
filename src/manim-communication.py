@@ -29,8 +29,8 @@ class CommunicationModel(Scene):
         llm_decoder = Triangle(color=box_color, fill_opacity=1).scale(1.1).rotate(PI/2)  # Rotated -90 degrees
         llm_decoder.stroke_color = BLACK
 
-        person_text = MarkupText("<b>Sender's Field of Experience</b>", font="Helvetica").scale(.6).set_color(BLACK)
-        llm_text = MarkupText("<b>Receiver's Field of Experience</b>", font="Helvetica").scale(.6).set_color(BLACK)
+        person_text = MarkupText("<b>Sender's Field of Experience</b>", font="Helvetica").scale(.6).set_color(GREY_E)
+        llm_text = MarkupText("<b>Receiver's Field of Experience</b>", font="Helvetica").scale(.6).set_color(GREY_E)
 
         # Create signal rectangle
         signal = RoundedRectangle(height=1.5, width=2, color=box_color, fill_opacity=1, corner_radius=.1)
@@ -57,8 +57,8 @@ class CommunicationModel(Scene):
         llm_context.move_to(RIGHT * 3.3)
         
         # Add labels
-        person_label = MarkupText("<b>Sender</b>", font="Helvetica", color=BLACK).scale(0.7).move_to(person)
-        llm_label = MarkupText("<b>Receiver</b>", font="Helvetica", color=BLACK).scale(0.7).move_to(llm)
+        person_label = MarkupText("<b>Sender</b>", font="Helvetica", color=WHITE).scale(0.7).move_to(person)
+        llm_label = MarkupText("<b>Receiver</b>", font="Helvetica", color=WHITE).scale(0.7).move_to(llm)
         
         # Add encoder/decoder labels
         person_encoder_label = MarkupText("<b>Encode</b>", font="Helvetica").scale(0.5).move_to(person_encoder)
@@ -71,7 +71,7 @@ class CommunicationModel(Scene):
         #person_encoder_label.next_to(person_encoder, UP, buff=0.3)
         #llm_decoder_label.next_to(llm_decoder, UP, buff=0.3)
         
-        perception = SVGMobject("../video_assets/perceptionw.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0])
+        perception = SVGMobject("./video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
         perception2 = perception.copy().move_to(llm_context.get_center() + [.5, 2.4, 0]).stretch(factor=-1, dim=0)
         # Create message dot that will travel through the system
         message = SVGMobject("mailb.svg").scale(0.3)
