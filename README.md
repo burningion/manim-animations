@@ -6,7 +6,12 @@ This is a repo for my manim animations.
 
 [![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
 
+## Media Choice
+
 [![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
+
+
+## Radar Score
 
 [![Radar Chart](./assets/radar-chart.gif)](./src/radar-chart.py)
 
