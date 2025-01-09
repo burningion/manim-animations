@@ -2,19 +2,6 @@
 
 This is a repo for my manim animations.
 
-## Communication Animation
-
-[![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
-
-## Media Choice
-
-[![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
-
-
-## Radar Score
-
-[![Radar Chart](./assets/radar-chart.gif)](./src/radar-chart.py)
-
 ## Installation 
 
 This repo uses `uv` in order to manage dependencies.
@@ -32,3 +19,15 @@ $ uv run manim -r 320,240 --format=gif src/manim-communication.py CommunicationM
 
 Media files will be output into the `media/` directory.
 
+### Radar Score
+
+[![Radar Chart](./assets/radar-chart.gif)](./src/radar-chart.py)
+
+
+### Communication Animation
+
+[![Communication Animation](./assets/communication.gif)](./src/manim-communication.py)
+
+### Media Choice
+
+[![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
