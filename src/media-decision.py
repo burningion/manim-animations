@@ -11,16 +11,17 @@ class DecisionTreeAnimation(Scene):
         decision_group.shift(UP * 2)
 
         # Create the bottom nodes
-        options = ["TV Show", "Social Media", "Movie Theater"]
-        bottom_circles = VGroup(*[Circle(radius=1.0) for _ in options])
-        bottom_texts = VGroup(*[Text(text, font_size=36, color=BLACK, font="Helvetica") for text in options])
+        options = ["<b>TV Show</b>", "<b>Movie Theater</b>", "<b>Social Media</b>"]
+        filenames = ["../video_assets/tv-show.svg", "../video_assets/movie-theater.svg", "../video_assets/social-media.svg"]
+        bottom_circles = VGroup(*[SVGMobject(file).scale(.5) for file in filenames])
+        bottom_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica") for text in options])
         
         # Position bottom nodes
         bottom_circles.arrange(RIGHT, buff=1.5)
         bottom_circles.shift(DOWN * 2.5)
         
         for text, circle in zip(bottom_texts, bottom_circles):
-            text.next_to(circle, ORIGIN)
+            text.next_to(circle, DOWN, buff=.5)
         
         bottom_groups = VGroup(*[
             VGroup(circle, text) 
