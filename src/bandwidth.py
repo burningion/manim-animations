@@ -195,7 +195,7 @@ class HumanProcessingRate(Scene):
         self.camera.background_color = WHITE
         
         # Title
-        title = Text("Human Information Processing Rate (~10 bits/s)", color=BLACK).scale(0.8)
+        title = Text("Human Information Processing Rate (~10 bits/s)", color=BLACK, font="Helvetica").scale(0.8)
         title.to_edge(UP)
         
         # Create examples from the paper
@@ -248,14 +248,14 @@ class HumanProcessingRate(Scene):
             include_numbers=True
         )
         
-        time_label = Text("Time (seconds)", color=BLACK).scale(0.5)
+        time_label = Text("Time (seconds)", color=BLACK, font="Helvetica").scale(0.5)
         time_label.next_to(timeline, DOWN)
         
         dot = Dot(color=BLUE_E)
         dot.move_to(timeline.n2p(0))
         
         # Create bit counter
-        bit_counter = Text("Bits processed: 0", color=BLACK).scale(0.6)
+        bit_counter = Text("Bits processed: 0", color=BLACK, font="Helvetica").scale(0.6)
         bit_counter.next_to(timeline, UP, buff=0.5)
         
         # Group timeline elements
@@ -310,9 +310,9 @@ class HumanProcessingRate(Scene):
     
     def create_example(self, title, rate, details, emoji):
         return VGroup(
-            Text(f"{emoji} {title}:", color=BLACK).scale(0.6),
-            Text(rate, color=BLUE_E).scale(0.5),
-            Text(details, color=GRAY_E).scale(0.4)
+            Text(f"{emoji} {title}:", color=BLACK, font="Helvetica").scale(0.6),
+            Text(rate, color=BLUE_E, font="Helvetica").scale(0.5),
+            Text(details, color=GRAY_E, font="Helvetica").scale(0.4)
         ).arrange(RIGHT, buff=0.5, aligned_edge=UP)
 
 # To render:
