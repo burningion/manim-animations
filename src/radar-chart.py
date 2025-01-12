@@ -186,9 +186,10 @@ class MultipleRadarCharts(Scene):
             ).next_to(radar.final_mobjects, UP)
             
             # Add everything to the scene
+            self.add(title)
+
             self.play(
                 Create(radar.final_mobjects),
-                Write(title),
                 run_time=2
             )
         
