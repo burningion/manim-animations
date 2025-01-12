@@ -6,6 +6,92 @@ config.frame_width = 19
 config.background_color = WHITE
 config.default_font = "Andale Mono"
 
+class NoiseBox(VGroup):
+    def __init__(self, height=4, width=6, num_particles=150, **kwargs):
+        super().__init__(**kwargs)
+        
+        # Store original dimensions
+        self.box_width = width
+        self.box_height = height
+        self.scale_factor = 1.0
+        
+        # Create box
+        self.box = RoundedRectangle(height=height, width=width, color=WHITE, corner_radius=.1)
+        
+        # Create particles within box bounds
+        self.particles = VGroup(*[
+            Dot(
+                point=[
+                    np.random.uniform(-width/2 + 0.5, width/2 - 0.5),
+                    np.random.uniform(-height/2 + 0.5, height/2 - 0.5),
+                    0
+                ],
+                radius=0.05,
+                color=WHITE
+            )
+            for _ in range(num_particles)
+        ])
+        
+        # Add label
+        self.label = MarkupText("<b>noise</b>", font="Helvetica", font_size=100, color=WHITE).next_to(self.box, UP)
+        
+        # Add everything to the VGroup
+        self.add(self.box, self.particles, self.label)
+    
+    def move_to(self, point):
+        """Override move_to to keep particles with the box"""
+        super().move_to(point)
+        return self
+    
+    def scale(self, scale_factor, **kwargs):
+        """Override scale to update internal scale tracking"""
+        self.scale_factor *= scale_factor
+        super().scale(scale_factor, **kwargs)
+        return self
+        
+    def start_animation(self):
+        """Add the updater for particle animation"""
+        self.particles.add_updater(self.update_particles)
+        
+    def stop_animation(self):
+        """Remove the updater"""
+        self.particles.clear_updaters()
+        
+    def update_particles(self, mob, dt):
+        """Update particle positions with bouncing behavior, accounting for scale"""
+        box_center = self.box.get_center()
+        effective_width = self.box_width * self.scale_factor
+        effective_height = self.box_height * self.scale_factor
+        
+        for particle in mob:
+            # Random movement scaled by the current scale factor
+            velocity = np.array([
+                np.random.uniform(-2, 2) * self.scale_factor,
+                np.random.uniform(-2, 2) * self.scale_factor,
+                0
+            ])
+            new_pos = particle.get_center() + velocity * dt
+            
+            # Calculate bounds relative to box center
+            bounds_x = effective_width/2 - 0.5 * self.scale_factor
+            bounds_y = effective_height/2 - 0.5 * self.scale_factor
+            
+            # Bounce off walls, relative to box center
+            relative_x = new_pos[0] - box_center[0]
+            relative_y = new_pos[1] - box_center[1]
+            
+            if abs(relative_x) > bounds_x:
+                velocity[0] *= -1
+                relative_x = np.clip(relative_x, -bounds_x, bounds_x)
+                new_pos[0] = box_center[0] + relative_x
+                
+            if abs(relative_y) > bounds_y:
+                velocity[1] *= -1
+                relative_y = np.clip(relative_y, -bounds_y, bounds_y)
+                new_pos[1] = box_center[1] + relative_y
+            
+            particle.move_to(new_pos)
+
 class CommunicationModel(Scene):
     def construct(self):
         #self.camera.background_color = (230, 230, 230)
@@ -32,6 +118,8 @@ class CommunicationModel(Scene):
         person_text = MarkupText("<b>Sender's Field of Experience</b>", font="Helvetica").scale(.6).set_color(GREY_E)
         llm_text = MarkupText("<b>Receiver's Field of Experience</b>", font="Helvetica").scale(.6).set_color(GREY_E)
 
+        noise_box = NoiseBox()
+        noise_box.move_to(ORIGIN + [0, 2.3, 0]).scale(0.3)
         # Create signal rectangle
         signal = RoundedRectangle(height=1.5, width=2, color=box_color, fill_opacity=1, corner_radius=.1)
         signal.stroke_color = BLACK
@@ -66,12 +154,13 @@ class CommunicationModel(Scene):
         
         line1 = Arrow(person_encoder, signal.get_left(), buff=0, color=BLACK)    
         line2 = Arrow(signal.get_right(), llm_decoder, buff=0, color=BLACK)
+        line3 = Arrow(noise_box.get_bottom(), signal_group.get_top(), buff=0, color=WHITE, stroke_width=10)
 
         # Position labels above triangles
         #person_encoder_label.next_to(person_encoder, UP, buff=0.3)
         #llm_decoder_label.next_to(llm_decoder, UP, buff=0.3)
         
-        perception = SVGMobject("./video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
+        perception = SVGMobject("../video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
         perception2 = perception.copy().move_to(llm_context.get_center() + [.5, 2.4, 0]).stretch(factor=-1, dim=0)
         # Create message dot that will travel through the system
         message = SVGMobject("mailb.svg").scale(0.3)
@@ -82,11 +171,15 @@ class CommunicationModel(Scene):
         message.move_to(person_encoder.get_center() + [0, -1.3, 0])
         # Initial setup animation
         self.add(llm_context, person_context, person, llm, person_text, llm_text,
-                    person_encoder, llm_decoder, signal_group, person_label, llm_label,
+                    person_encoder, llm_decoder, noise_box.particles, noise_box.box, signal_group, person_label, llm_label,
                     person_encoder_label, llm_decoder_label, shared_experience_text,
-                    line1, line2, perception, perception2)
+                    line1, line2, perception, perception2, noise_box.label, line3, noise_box.particles)
         self.wait(0.5)
         label_offset = [0, -.9, 0]
+                 
+        # Start the particle animation
+        noise_box.start_animation()
+        self.wait(1.5)
         # 1. Message starts in person (highlight person)
         self.play(
             UpdateFromAlphaFunc(
