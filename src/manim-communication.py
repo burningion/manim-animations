@@ -160,7 +160,7 @@ class CommunicationModel(Scene):
         #person_encoder_label.next_to(person_encoder, UP, buff=0.3)
         #llm_decoder_label.next_to(llm_decoder, UP, buff=0.3)
         
-        perception = SVGMobject("../video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
+        perception = SVGMobject("./video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
         perception2 = perception.copy().move_to(llm_context.get_center() + [.5, 2.4, 0]).stretch(factor=-1, dim=0)
         # Create message dot that will travel through the system
         message = SVGMobject("mailb.svg").scale(0.3)
