@@ -1,10 +1,16 @@
 from manim import *
 import numpy as np
+import os
 
 config.frame_height = 7
 config.frame_width = 19
 config.background_color = WHITE
 config.default_font = "Andale Mono"
+
+asset_folder = "../video_assets" # Path to assets folder for preview
+
+if os.environ.get("RENDERING_MODE"):
+    asset_folder = "./video_assets"
 
 class NoiseBox(VGroup):
     def __init__(self, height=4, width=6, num_particles=150, **kwargs):
@@ -160,7 +166,7 @@ class CommunicationModel(Scene):
         #person_encoder_label.next_to(person_encoder, UP, buff=0.3)
         #llm_decoder_label.next_to(llm_decoder, UP, buff=0.3)
         
-        perception = SVGMobject("./video_assets/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
+        perception = SVGMobject(f"{asset_folder}/perceptionw2.svg").scale(.9).move_to(person_context.get_center() + [-.5, 2.4, 0]).stretch(factor=-1, dim=0)
         perception2 = perception.copy().move_to(llm_context.get_center() + [.5, 2.4, 0]).stretch(factor=-1, dim=0)
         # Create message dot that will travel through the system
         message = SVGMobject("mailb.svg").scale(0.3)
