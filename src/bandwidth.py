@@ -1,89 +1,75 @@
 from manim import *
-import random
-
-class BandwidthComparison(Scene):
+import random, math
+import numpy as np
+class SimpleRateComparison(Scene):
     def construct(self):
-        # Use white background with dark text
+        # Set white background
         self.camera.background_color = WHITE
         
-        # Create title
-        title = Text("Human Information Processing", color=BLACK).scale(0.8)
+        # Title
+        title = Text("Information Processing Rates", color=BLACK)
         title.to_edge(UP)
-        
-        # Create labels for the two rates
-        thought_label = Text("Conscious Thought\n10 bits/s", color=BLACK).scale(0.6)
-        sensory_label = Text("Sensory Input\n1 Gbit/s", color=BLACK).scale(0.6)
-        
-        # Position labels
-        thought_label.to_edge(LEFT).shift(UP * 1)
-        sensory_label.to_edge(LEFT).shift(DOWN * 1)
-        
-        # Create rectangles to represent the bandwidths
-        thought_rect = Rectangle(
-            width=0.1,  # Very small width for 10 bits
-            height=0.5,
-            fill_color=BLUE_E,
-            fill_opacity=1,
-            stroke_color=BLUE_E
-        )
-        
-        sensory_rect = Rectangle(
-            width=10,  # 100,000,000 times wider
-            height=0.5,
-            fill_color=RED_E,
-            fill_opacity=1,
-            stroke_color=RED_E
-        )
-        
-        # Position rectangles
-        thought_rect.next_to(thought_label, RIGHT, buff=0.5)
-        sensory_rect.next_to(sensory_label, RIGHT, buff=0.5)
-        
-        # Create explanatory text
-        explanation = Text(
-            "The difference is about 100 million times!",
-            color=BLACK
-        ).scale(0.6)
-        explanation.next_to(sensory_rect, DOWN, buff=1)
-        
-        # Animation sequence
         self.play(Write(title))
-        self.wait(1)
         
+        # Create two simple rectangles to show scale
+        neural = Rectangle(width=10, height=0.5, color=BLUE_E)
+        neural.shift(UP * 2)
+        
+        conscious = Rectangle(width=0.1, height=0.5, color=RED_E)  # 1/100 width
+        conscious.shift(DOWN * 2)
+        
+        # Labels
+        neural_label = Text("1 Gbit/s", color=BLACK).scale(0.8)
+        neural_label.next_to(neural, RIGHT)
+        
+        conscious_label = Text("10 bit/s", color=BLACK).scale(0.8)
+        conscious_label.next_to(conscious, RIGHT)
+        
+        # Show the basic shapes
         self.play(
-            Write(thought_label),
-            Create(thought_rect)
+            Create(neural),
+            Write(neural_label)
         )
-        self.wait(1)
-        
         self.play(
-            Write(sensory_label),
-            Create(sensory_rect)
+            Create(conscious),
+            Write(conscious_label)
         )
-        self.wait(1)
         
-        self.play(Write(explanation))
-        self.wait(2)
+        # Add bit counters
+        neural_bits = VGroup(*[
+            Dot(color=BLUE_E, radius=0.05)
+            for _ in range(20)
+        ])
         
-        # Add a zooming animation to emphasize the scale
-        zoom_rect = Rectangle(
-            width=thought_rect.width * 1.5,
-            height=thought_rect.height * 1.5,
-            color=GREEN
-        ).move_to(thought_rect)
+        conscious_bit = Dot(color=RED_E, radius=0.05)
         
-        self.play(Create(zoom_rect))
-        self.play(
-            zoom_rect.animate.scale(50),
-            run_time=3
-        )
-        self.wait(1)
+        # Position bits
+        for i, bit in enumerate(neural_bits):
+            bit.move_to(neural.get_left() + RIGHT * 0.5 + RIGHT * i * 0.4)
         
-        # Fade out everything
-        self.play(
-            *[FadeOut(mob) for mob in self.mobjects],
-            run_time=2
-        )
+        conscious_bit.move_to(conscious.get_left())
+        
+        self.add(neural_bits, conscious_bit)
+        
+        # Simple animation to show rate difference
+        for _ in range(50):  # 5 seconds
+            # Neural animation - rapid movement
+            self.play(
+                *[bit.animate.shift(RIGHT * 0.2) for bit in neural_bits],
+                conscious_bit.animate.shift(RIGHT * 0.002),  # Much slower
+                run_time=0.1
+            )
+            
+            # Reset bits that go too far
+            for bit in neural_bits:
+                if bit.get_center()[0] > neural.get_right()[0]:
+                    bit.move_to(neural.get_left() + RIGHT * 0.5)
+            
+            if conscious_bit.get_center()[0] > conscious.get_right()[0]:
+                conscious_bit.move_to(conscious.get_left())
+        
+        self.wait()
+
 
 class DataRateVisualization(Scene):
     def construct(self):
