@@ -23,12 +23,13 @@ class DecisionTreeAnimation(Scene):
         bottom_circles = VGroup(*[SVGMobject(file).scale(.5) for file in filenames])
         bottom_texts = VGroup(*[MarkupText(text, font_size=24, color=BLACK, font="Helvetica") for text in options])
         score_texts = VGroup(*[Text(score, font_size=20, color=BLACK, font="Helvetica") for score in scores])
-        trophy = SVGMobject(f"{asset_folder}/trophy.svg").scale(0.8)
+        trophy = SVGMobject(f"{asset_folder}/trophy.svg").scale(0.4)
         # Position bottom nodes
         bottom_circles.arrange(RIGHT, buff=3.0)
         bottom_circles.shift(DOWN * 2.5)
-        trophy.rotate(-PI/12)
-        trophy.move_to(bottom_circles[1].get_center() + RIGHT * 5.5 + UP * 4.5)
+        #trophy.rotate(-PI/12)
+        trophy.move_to(bottom_circles[1].get_center() + RIGHT * 4.4 + UP * 4.5)
+        trophy.set_opacity(0)
         for text, circle, score in zip(bottom_texts, bottom_circles, score_texts):
             text.next_to(circle, DOWN, buff=0.7)
             score.next_to(text, DOWN, buff=0.5)
@@ -53,7 +54,8 @@ class DecisionTreeAnimation(Scene):
         # Initially hide score texts
         for score in score_texts:
             score.set_opacity(0)
-
+        
+        self.add(trophy)
         # First part of animation (same as before)
         self.play(Create(decision_circle))
         self.play(Write(decision_text))
@@ -94,7 +96,7 @@ class DecisionTreeAnimation(Scene):
                 run_time=0.5
             )
         self.play(
-            FadeIn(trophy),
+            trophy.animate.set_opacity(1),
             run_time=1
         )
         self.wait(5)
