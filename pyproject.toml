@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "kiwisolver>=1.4.8",
+    "manim-ml>=0.0.24",
     "manim>=0.18.1",
 ]
 

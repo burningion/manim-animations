@@ -357,6 +357,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "kiwisolver" },
     { name = "manim" },
+    { name = "manim-ml" },
 ]
 
 [package.dev-dependencies]
@@ -368,10 +369,20 @@ dev = [
 requires-dist = [
     { name = "kiwisolver", specifier = ">=1.4.8" },
     { name = "manim", specifier = ">=0.18.1" },
+    { name = "manim-ml", specifier = ">=0.0.24" },
 ]
 
 [package.metadata.requires-dev]
 dev = [{ name = "ipykernel", specifier = ">=6.29.5" }]
+
+[[package]]
+name = "manim-ml"
+version = "0.0.24"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/87/b1/3bb365002f3b2db5413353286991d6a59e65e9aeb4be78a8b25c6311d865/manim_ml-0.0.24.tar.gz", hash = "sha256:338a8cdca237ef1075b89bfcaa8388b1019d4e942f24aacc3c4efe4f377d93d6", size = 56212 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/b5/349607ab7a7580194c1a4b44297582718af66dc99c4d4be11050298f9e68/manim_ml-0.0.24-py3-none-any.whl", hash = "sha256:b112aaca5f7a196dfbb3c3a9ba241f2716b0d98e915ff1f1d963dfeea8e05da7", size = 62251 },
+]
 
 [[package]]
 name = "manimpango"
