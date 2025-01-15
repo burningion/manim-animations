@@ -52,3 +52,8 @@ class AnimationGroup(Animation):
 ### Media Choice
 
 [![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
+
+
+## Prompt Feedback Loop
+
+[![Curly Loop](./assets/curly.gif)](./src/curly.py)
