@@ -55,29 +55,38 @@ class CurlyBraceTransformation(Scene):
         # Set the background color to white
         self.camera.background_color = WHITE
         rect_color = ManimColor((241, 172, 75))
-        think_color = ManimColor((75, 161, 241))
+        think_color = ManimColor((255, 182, 55))
         # First set of braces (top)
         think_loop = ThinkingAnimation(
-            radius=.5,     # Smaller circle
+            radius=.4,     # Smaller circle
             num_dots=10,    # More dots
             color=GREY_E,   # colors man
             run_time=2,   # Faster animation
             position=np.array([-5.2,1.8,0])
         )
         second_think_loop = ThinkingAnimation(
-            radius=.5,     # Smaller circle
+            radius=.4,     # Smaller circle
             num_dots=10,    # More dots
             color=GREY_E,   # colors man
             run_time=2,   # Faster animation
             position=np.array([-5.2,1.8,0])
         )
         third_think_loop = ThinkingAnimation(
-            radius=.5,     # Smaller circle
+            radius=.4,     # Smaller circle
             num_dots=10,    # More dots
             color=GREY_E,   # colors man
             run_time=2,   # Faster animation
             position=np.array([-5.2,1.8,0])
         )
+
+        dashed_line = DashedLine(
+            start=[-4, .30, 0],  # Your first point
+            end=[-2, .30, 0],    # Your second point
+            dash_length=0.2,  # Length of each dash
+            dashed_ratio=0.5,  # Ratio of dash to space
+            color=BLACK
+        )
+
         small_brace_top = Tex(r"\{\_\}", color=BLACK).scale(1.5)
         small_brace_top.move_to(LEFT * 2 + UP * 2.5)
         prompt_top = Text("Prompt", color=BLACK, font="Helvetica").next_to(small_brace_top, DOWN, buff=0.5)
@@ -133,7 +142,7 @@ class CurlyBraceTransformation(Scene):
         self.play(think_loop)
         self.remove(think_loop.circle_group)
         self.play(
-            Flash(input, color=think_color, flash_radius=1.2),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=14),
         )
         # Add all elements to scene
         self.play(
@@ -152,10 +161,24 @@ class CurlyBraceTransformation(Scene):
             FadeIn(neural2),
             run_time=2
         )
+        '''
+        self.play(
+            *[
+                ApplyMethod(
+                    dashed_line.shift, 
+                    dashed_line.get_vector() * -.6,  # Controls how far dashes move
+                    rate_func=lambda t: t % 1,  # Makes the animation loop
+                    run_time=2
+                )
+                for _ in range(2)  # How many cycles
+            ]
+        )
+        dashed_line.set_opacity(0)
+        '''
         self.play(second_think_loop)
         self.remove(second_think_loop.circle_group)
         self.play(
-            Flash(input, color=think_color, flash_radius=1.2),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=6, num_lines=24, line_stroke_width=14),
         )
         self.play(
             Write(small_brace_bottom),
@@ -174,7 +197,21 @@ class CurlyBraceTransformation(Scene):
             Create(response_bottom),
             run_time=.5
         )
-
+        '''
+        dashed_line.set_opacity(1)
+        self.play(
+            *[
+                ApplyMethod(
+                    dashed_line.shift, 
+                    dashed_line.get_vector() * -.6,  # Controls how far dashes move
+                    rate_func=lambda t: t % 1,  # Makes the animation loop
+                    run_time=2
+                )
+                for _ in range(2)  # How many cycles
+            ]
+        )
+        dashed_line.set_opacity(0)
+        '''
         # Add dashed line last
         '''
         self.play(
@@ -185,9 +222,9 @@ class CurlyBraceTransformation(Scene):
         self.play(third_think_loop)
         self.remove(third_think_loop.circle_group)
         self.play(
-            Flash(input, color=think_color, flash_radius=1.2),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=14),
         )
-        self.wait(5)
+        
         self.wait(1)
 
 if __name__ == "__main__":
