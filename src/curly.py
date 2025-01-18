@@ -142,7 +142,8 @@ class CurlyBraceTransformation(Scene):
         self.play(think_loop)
         self.remove(think_loop.circle_group)
         self.play(
-            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=14),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=8),
+            run_time=.3
         )
         # Add all elements to scene
         self.play(
@@ -178,7 +179,8 @@ class CurlyBraceTransformation(Scene):
         self.play(second_think_loop)
         self.remove(second_think_loop.circle_group)
         self.play(
-            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=6, num_lines=24, line_stroke_width=14),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=6, num_lines=24, line_stroke_width=8),
+            run_time=.3
         )
         self.play(
             Write(small_brace_bottom),
@@ -222,7 +224,8 @@ class CurlyBraceTransformation(Scene):
         self.play(third_think_loop)
         self.remove(third_think_loop.circle_group)
         self.play(
-            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=14),
+            Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=8),
+            run_time=.3
         )
         
         self.wait(1)

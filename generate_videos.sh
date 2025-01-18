@@ -11,3 +11,6 @@ RENDERING_MODE=True uv run manim  --resolution "1280,720" src/radar-chart.py Mul
 RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/curly.py CurlyBraceTransformation
 cp media/videos/curly/200p60/CurlyBraceTransformation_ManimCE_v0.18.1.gif ./assets/curly.gif
 RENDERING_MODE=True uv run manim  --resolution "1280,720" src/curly.py CurlyBraceTransformation
+RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/filter.py FilterAnimation
+cp media/videos/filter/200p60/FilterAnimation_ManimCE_v0.18.1.gif ./assets/filter.gif
+RENDERING_MODE=True uv run manim  --resolution "1280,720" src/filter.py FilterAnimation
