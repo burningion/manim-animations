@@ -57,3 +57,7 @@ class AnimationGroup(Animation):
 ## Prompt Feedback Loop
 
 [![Curly Loop](./assets/curly.gif)](./src/curly.py)
+
+## Mind Filter 
+
+[![Mind Filter](./assets/filter.gif)](./src/filter.py)
