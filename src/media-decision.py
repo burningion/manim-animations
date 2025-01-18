@@ -71,15 +71,14 @@ class DecisionTreeAnimation(Scene):
         
         self.add(trophy, schramm, schramm_label)
         # First part of animation (same as before)
-        self.play(Create(decision_circle))
-        self.play(Write(decision_text))
+        self.add(decision_circle, decision_text)
         for arrow in arrows:
-            self.play(Create(arrow), run_time=1)
+            self.play(Create(arrow), run_time=.3)
         for group in bottom_groups:
             self.play(
                 Create(group[0]),
                 Write(group[1]),
-                run_time=1
+                run_time=.3
             )
         
         self.wait(1)
