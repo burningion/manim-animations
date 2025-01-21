@@ -49,7 +49,7 @@ class FlexibleGraphAnimation(Scene):
         y_label = Text(self.y_label, font_size=24).next_to(axes.y_axis, LEFT)
         
         # Create title
-        title = Text(self.title, font_size=36).to_edge(UP)
+        title = Text(self.title, font_size=36).to_edge(UP, buff=-0.25)
         
         return x_label, y_label, title
     
@@ -76,7 +76,7 @@ class FlexibleGraphAnimation(Scene):
     def construct(self):
         # Create the elements
         self.camera.frame_height = 10
-        self.camera.frame_width = 16
+        self.camera.frame_width = 17
         self.camera.background_color = "#ece6e2"
         self.black = "#343434"
         Text.set_default(font="Helvetica", color=self.black)
