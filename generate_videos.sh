@@ -14,3 +14,6 @@ RENDERING_MODE=True uv run manim  --resolution "1280,720" src/curly.py CurlyBrac
 RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/filter.py FilterAnimation
 cp media/videos/filter/200p60/FilterAnimation_ManimCE_v0.18.1.gif ./assets/filter.gif
 RENDERING_MODE=True uv run manim  --resolution "1280,720" src/filter.py FilterAnimation
+RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/tokenwindow.py ContextWindowAnimation
+cp media/videos/tokenwindow/200p60/ContextWindowAnimation_ManimCE_v0.18.1.gif ./assets/tokenwindow.gif
+RENDERING_MODE=True uv run manim  --resolution "1280,720" src/tokenwindow.py ContextWindowAnimation
