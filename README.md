@@ -54,14 +54,14 @@ class AnimationGroup(Animation):
 [![Media Decision](./assets/media-decision.gif)](./src/media-decision.py)
 
 
-## Prompt Feedback Loop
-
-[![Curly Loop](./assets/curly.gif)](./src/curly.py)
-
 ## Mind Filter 
 
 [![Mind Filter](./assets/filter.gif)](./src/filter.py)
 
-## Token Window
+## Prompt Feedback Loop
+
+[![Curly Loop](./assets/curly.gif)](./src/curly.py)
+
+## Shrinking Token Window
 
 [![Token Window](./assets/tokenwindow.gif)](./src/tokenwindow.py)
