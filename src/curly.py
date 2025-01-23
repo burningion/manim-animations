@@ -23,7 +23,7 @@ class ThinkingAnimation(Animation):
         self.circle_group = VGroup()
         self.num_dots = num_dots
         self.radius = radius
-        
+
         # Create dots arranged in a circle
         for i in range(num_dots):
             angle = i * TAU / num_dots
@@ -33,10 +33,10 @@ class ThinkingAnimation(Animation):
                 radius=0.15
             ).rotate(angle, about_point=ORIGIN)
             self.circle_group.add(dot)
-        
+
         # Move the entire group to the specified position
         self.circle_group.move_to(position)
-            
+
         super().__init__(
             self.circle_group,
             rate_func=rate_func,
@@ -102,8 +102,8 @@ class CurlyBraceTransformation(Scene):
 
         large_brace_top = Tex(r"\{\_\}", color=BLACK).scale(5)
         large_brace_top.move_to(RIGHT * 3 + UP * 2.5)
-        response_top = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_top, DOWN, buff=0.5)
-        
+        response_top = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_top, DOWN, buff=0.5) # Renamed to "LLM Response 1"
+
         arrow_top = Arrow(
             start=small_brace_top.get_right(),
             end=large_brace_top.get_left(),
@@ -114,12 +114,12 @@ class CurlyBraceTransformation(Scene):
         # Second set of braces (bottom)
         small_brace_bottom = Tex(r"\{\_\}", color=BLACK).scale(1.5)
         small_brace_bottom.move_to(LEFT * 2 + DOWN * 1.5)
-        prompt_bottom = Text("Prompt", color=BLACK, font="Helvetica").next_to(small_brace_bottom, DOWN, buff=0.5)
-        
+        prompt_bottom = Text("Prompt", color=BLACK, font="Helvetica").next_to(small_brace_bottom, DOWN, buff=0.5) # More descriptive prompt 2
+
         large_brace_bottom = Tex(r"\{\_\}", color=BLACK).scale(4.5)
         large_brace_bottom.move_to(RIGHT * 3 + DOWN * 1.5)
-        response_bottom = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_bottom, DOWN, buff=0.5)
-        
+        response_bottom = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_bottom, DOWN, buff=0.5) # Renamed to "LLM Response 2"
+
         arrow_bottom = Arrow(
             start=small_brace_bottom.get_right(),
             end=large_brace_bottom.get_left(),
@@ -127,16 +127,7 @@ class CurlyBraceTransformation(Scene):
             color=BLACK
         )
 
-        # Add dashed line separator
-        '''
-        dashed_line = DashedLine(
-            start=LEFT * 7,  # Extend a bit past the left side
-            end=RIGHT * 1.5,   # Extend a bit past the right side
-            color=BLACK,
-            dash_length=0.2,
-            dashed_ratio=0.5
-        ).move_to(DOWN * 0.1)  # Position between the two conversations
-        '''
+
         self.add(rect, input, thinking)
         self.wait(.5)
         self.play(think_loop)
@@ -162,20 +153,8 @@ class CurlyBraceTransformation(Scene):
             FadeIn(neural2),
             run_time=2
         )
-        '''
-        self.play(
-            *[
-                ApplyMethod(
-                    dashed_line.shift, 
-                    dashed_line.get_vector() * -.6,  # Controls how far dashes move
-                    rate_func=lambda t: t % 1,  # Makes the animation loop
-                    run_time=2
-                )
-                for _ in range(2)  # How many cycles
-            ]
-        )
-        dashed_line.set_opacity(0)
-        '''
+
+
         self.play(second_think_loop)
         self.remove(second_think_loop.circle_group)
         self.play(
@@ -186,48 +165,46 @@ class CurlyBraceTransformation(Scene):
             Write(small_brace_bottom),
             run_time=1
         )
-
-
         self.play(
             Create(prompt_bottom),
-            Create(arrow_bottom),
             run_time=.5
         )
+
+        # --- Prepend Animation (Moved to after Prompt 2 creation) ---
+        prompt_copy_brace = small_brace_top.copy()
+        response_copy_brace = large_brace_top.copy()
+
+        prepend_group = VGroup(prompt_copy_brace, response_copy_brace) # Group only braces
+
+        # Target positions to be *above* Prompt 2, clearly showing movement
+        prompt_target_brace_pos = small_brace_bottom.get_center() + UP * 1.0 + LEFT * 0.5  # Above and slightly left
+        response_target_brace_pos = small_brace_bottom.get_center() + UP * 0.3 + LEFT * 0.5 # Below prompt, above and slightly left
+
+
         self.play(
+            prompt_copy_brace.animate.scale(0.5).move_to(prompt_target_brace_pos),
+            response_copy_brace.animate.scale(0.5).move_to(response_target_brace_pos),
+            run_time=2, # Slow down the animation
+            path_arc=0.2 # Slight arc for movement
+        )
+        self.play(FadeOut(prepend_group, shift=DOWN*0.5), run_time=0.5) # Fade out after movement
+        # --- End Prepend Animation ---
+
+
+        self.play(
+            Create(arrow_bottom),
             Write(large_brace_bottom),
             FadeIn(neural3),
             Create(response_bottom),
             run_time=.5
         )
-        '''
-        dashed_line.set_opacity(1)
-        self.play(
-            *[
-                ApplyMethod(
-                    dashed_line.shift, 
-                    dashed_line.get_vector() * -.6,  # Controls how far dashes move
-                    rate_func=lambda t: t % 1,  # Makes the animation loop
-                    run_time=2
-                )
-                for _ in range(2)  # How many cycles
-            ]
-        )
-        dashed_line.set_opacity(0)
-        '''
-        # Add dashed line last
-        '''
-        self.play(
-            Create(dashed_line),
-            run_time=1
-        )
-        '''
+
         self.play(third_think_loop)
         self.remove(third_think_loop.circle_group)
         self.play(
             Flash(input, color=BLUE_E, flash_radius=1.2, line_width=12, num_lines=24, line_stroke_width=8),
             run_time=.3
         )
-        
         self.wait(1)
 
 if __name__ == "__main__":
