@@ -15,11 +15,19 @@ class IdeaLoadingAnimation(Scene):
         self.camera.background_color = WHITE
         rect_color = ManimColor((241, 172, 75))
         neural_rect_color = ManimColor((158, 162, 184))
-        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([-2, 0, 0]).stretch(factor=-1, dim=0)
+        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([-2, .5, 0]).stretch(factor=-1, dim=0)
         rect = RoundedRectangle(height=5, width=3.5, corner_radius=0.2, color=rect_color, fill_opacity=1)
         rect.move_to([-2, -0.2, 0])
-        thinking = MarkupText("Programmer\ngathering context\nfor a task", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
-        ready = MarkupText("Ready\nfor work", font="Helvetica", color=BLACK, font_size=24).move_to([0,1.8,0])
+        thinking = Tex(r"Programmer\\gathering context\\for a task",
+                       tex_template=TexFontTemplates.helvetica_fourier_it,
+                       color=BLACK,
+                       tex_environment="flushleft",
+                       font_size=36).move_to([-2, -1.5, 0])
+        ready = Tex(r"Ready\\for work",
+                       tex_template=TexFontTemplates.helvetica_fourier_it,
+                       color=BLACK,
+                       tex_environment="flushleft",
+                       font_size=48).move_to([0,1.5,0])
         
 
         self.add(rect, thinking, input_svg)
@@ -36,7 +44,7 @@ class IdeaLoadingAnimation(Scene):
         idea_texts = VGroup()
         idea_rects = VGroup()
 
-        idea_names = ["Problem\nDomain", "Existing\nCode", "Consequnces\nof Change"]  # Example idea names
+        idea_names = [r"Problem\\Domain", r"Existing\\Code", r"Consequnces\\of Change"]  # Example idea names
         idea_bit_sizes = [200, 120, 340]  # Information density in bits
 
         for i in range(3):
@@ -46,7 +54,11 @@ class IdeaLoadingAnimation(Scene):
             placeholder_rect.move_to([placeholder_x, placeholder_y_start - i * placeholder_spacing, 0])
             idea_rects.add(placeholder_rect)
 
-            idea_text = MarkupText(idea_names[i], font="Helvetica", color=WHITE, font_size=24)
+            idea_text = Tex(idea_names[i], 
+                            tex_template=TexFontTemplates.helvetica_fourier_it,
+                            color=WHITE,
+                            tex_environment="flushleft",
+                            font_size=32)
             idea_text.move_to(placeholder_rect.get_center())
             idea_texts.add(idea_text)
 
@@ -113,7 +125,7 @@ class IdeaLoadingAnimation(Scene):
             run_time=1
         )
         self.play(*[FadeOut(placeholder) for placeholder in idea_placeholders], 
-                  input_svg.animate.move_to([0,0,0]),
+                  input_svg.animate.move_to([0,-.4,0]),
                   rect.animate.move_to([0,0,0]),
                   run_time=1)
 
