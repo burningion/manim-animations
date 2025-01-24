@@ -44,7 +44,7 @@ class IdeaLoadingAnimation(Scene):
         idea_texts = VGroup()
         idea_rects = VGroup()
 
-        idea_names = [r"Problem\\Domain", r"Existing\\Code", r"consequences\\of Change"]  # Example idea names
+        idea_names = [r"Problem\\Domain", r"Existing\\Code", r"Consequences\\of Change"]  # Example idea names
         idea_bit_sizes = [200, 120, 340]  # Information density in bits
 
         for i in range(3):
