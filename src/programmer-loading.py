@@ -15,54 +15,13 @@ class IdeaLoadingAnimation(Scene):
         self.camera.background_color = WHITE
         rect_color = ManimColor((241, 172, 75))
         neural_rect_color = ManimColor((158, 162, 184))
-        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([-2, 0, 0])
+        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([-2, 0, 0]).stretch(factor=-1, dim=0)
         rect = RoundedRectangle(height=5, width=3.5, corner_radius=0.2, color=rect_color, fill_opacity=1)
         rect.move_to([-2, -0.2, 0])
-        thinking = MarkupText("Programmer\ngathering context\nfor task", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
-        ready = MarkupText("Ready\nfor work", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
+        thinking = MarkupText("Programmer\ngathering context\nfor a task", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
+        ready = MarkupText("Ready\nfor work", font="Helvetica", color=BLACK, font_size=24).move_to([0,1.8,0])
         
-        background_group = VGroup()
-        background_group.set_z_index(-1)  # Set behind everything else
 
-        # Create flowing particles (reusing from example, can be simplified if needed)
-        particles = VGroup()
-        for i in range(30):
-            particle = Dot(
-                radius=0.05,
-                color=BLUE_D,
-                fill_opacity=random.uniform(0.4, 0.8)
-            )
-            particle.move_to(
-                np.array([
-                    random.uniform(-7, 7),
-                    random.uniform(-4, 4),
-                    0,  # Explicit z=0 for particles
-                ])
-            )
-            particles.add(particle)
-        background_group.add(particles)
-
-        waves = VGroup()
-        for i in range(5):
-            wave = FunctionGraph(
-                lambda x: 0.5 * np.sin(x + i),
-                x_range=[-7, 7],
-                color=BLUE,
-                stroke_opacity=0.3
-            )
-            wave.shift(UP * (i - 2))
-            waves.add(wave)
-
-        background_group.add(waves)
-
-        interference_circles = VGroup()
-        for radius in np.linspace(0, 3, 5):
-            circle = Circle(radius=radius, stroke_color=BLUE_A, stroke_opacity=0.2)
-            interference_circles.add(circle)
-
-        background_group.add(interference_circles)
-
-        self.add(background_group)
         self.add(rect, thinking, input_svg)
 
         # Placeholders for Ideas
@@ -125,7 +84,6 @@ class IdeaLoadingAnimation(Scene):
                 )
                 for i in range(3)
             ],
-            particles.animate.shift(LEFT * 0.5),  # Simplified particle shift animation
             run_time=2,
             rate_func=rate_functions.smooth,
         )
@@ -154,6 +112,10 @@ class IdeaLoadingAnimation(Scene):
             FadeOut(thinking),
             run_time=1
         )
+        self.play(*[FadeOut(placeholder) for placeholder in idea_placeholders], 
+                  input_svg.animate.move_to([0,0,0]),
+                  rect.animate.move_to([0,0,0]),
+                  run_time=1)
 
         self.play(
             FadeIn(ready),
