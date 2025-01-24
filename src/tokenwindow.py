@@ -80,7 +80,11 @@ class ContextWindowAnimation(Scene):
         context_window_fill = Rectangle(width=window_width, height=window_height, color=available_color, fill_opacity=1).move_to(DOWN*2.5).align_to(context_window_rect, LEFT) # Moved down, aligned left initially
         context_window_group = VGroup(context_window_rect, context_window_fill).move_to(DOWN * 2.5) # Group moved down even further
 
-        context_label = Text("200k Token Context Window", color=BLACK, font="Helvetica", font_size=20).next_to(context_window_rect, UP, buff=0.1) # Smaller font for context label
+        context_label = Tex("200k Token Context Window",
+                            tex_template=TexFontTemplates.helvetica_fourier_it,
+                            color=BLACK,
+                            tex_environment="flushleft",
+                            font_size=39).next_to(context_window_rect, UP, buff=0.1) # Smaller font for context label
 
         # Neural Network Icon
         neural_net = SVGMobject(os.path.join(asset_folder, "neural2.svg")).scale(0.45).move_to(RIGHT * 5 + UP * 1.5) # Vertically Aligned with User Input
@@ -91,9 +95,17 @@ class ContextWindowAnimation(Scene):
         rect = RoundedRectangle(height=4.5, width=3.5, corner_radius=0.2, color=rect_color, fill_opacity=1)
         neural_rect = RoundedRectangle(height=4.5, width=3.5, corner_radius=0.2, color=neural_rect_color, fill_opacity=1)
         neural_rect.move_to([5, .82, 0])
-        llm_label = MarkupText("Language Model", font="Helvetica", color=BLACK, font_size=28).next_to(neural_net, DOWN, buff=0.2)
+        llm_label = Tex(r"Language Model",
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                        color=BLACK,
+                        tex_environment="flushleft",
+                        font_size=36).next_to(neural_net, DOWN, buff=0.2)
         rect.move_to([-5, .82, 0])
-        thinking = MarkupText("User thinking\nat 10 bits / second", font="Helvetica", color=BLACK, font_size=28).next_to(input_icon, DOWN, buff=0.2)
+        thinking = Tex(r"User thinking\\at 10 bits / second",
+                       tex_template=TexFontTemplates.helvetica_fourier_it,
+                       color=BLACK,
+                       tex_environment="flushleft",
+                       font_size=36).next_to(input_icon, DOWN, buff=0.2)
 
         # Thinking Animation
         think_loop = ThinkingAnimation(
@@ -108,9 +120,17 @@ class ContextWindowAnimation(Scene):
         prompt_response_y_pos = 1 # Fixed Y position for prompts and responses in the middle row
         def create_prompt_response(prompt_text, response_text): # Removed position_y argument
             prompt_brace = Tex(r"\{\_\}", color=BLACK).scale(0.8).move_to(LEFT * 2 + UP * prompt_response_y_pos) # Fixed Y
-            prompt_label = Text(prompt_text, color=BLACK, font="Helvetica", font_size=16).next_to(prompt_brace, DOWN, buff=0.1)
+            prompt_label = Tex(prompt_text,
+                               tex_template=TexFontTemplates.helvetica_fourier_it,
+                            color=BLACK,
+                            tex_environment="flushleft",
+                            font_size=24).next_to(prompt_brace, DOWN, buff=0.1)
             response_brace = Tex(r"\{\_\}", color=BLACK).scale(2.5).move_to(RIGHT * 2 + UP * prompt_response_y_pos) # Fixed Y
-            response_label = Text(response_text, color=BLACK, font="Helvetica", font_size=16).next_to(response_brace, DOWN, buff=0.1)
+            response_label = Tex(response_text, 
+                                  tex_template=TexFontTemplates.helvetica_fourier_it,
+                            color=BLACK,
+                            tex_environment="flushleft",
+                            font_size=24).next_to(response_brace, DOWN, buff=0.1)
             arrow = Arrow(start=prompt_brace.get_right(), end=response_brace.get_left(), buff=0.2, color=BLACK, stroke_width=2) # Thinner arrow
             return VGroup(prompt_brace, prompt_label, response_brace, response_label, arrow)
 
@@ -119,7 +139,7 @@ class ContextWindowAnimation(Scene):
         self.wait(0.5)
 
         # --- Turn 1 ---
-        turn1_group = create_prompt_response("Prompt 1\n(5k tokens)", "Response 1\n(15k tokens)") # No position argument now
+        turn1_group = create_prompt_response(r"Prompt 1\\(5k tokens)", r"Response 1\\(15k tokens)") # No position argument now
         self.play(Write(turn1_group[0:2]), Create(turn1_group[4]), run_time=0.5)
         self.play(think_loop)
         self.remove(think_loop.circle_group)
@@ -142,7 +162,7 @@ class ContextWindowAnimation(Scene):
         self.wait(0.5)
 
         # --- Turn 2 ---
-        turn2_group = create_prompt_response("Prompt 2\n(8k tokens)", "Response 2\n(22k tokens)") # No position argument
+        turn2_group = create_prompt_response(r"Prompt 2\\(8k tokens)", r"Response 2\\(22k tokens)") # No position argument
         self.play(Write(turn2_group[0:2]), Create(turn2_group[4]), run_time=0.5)
         self.play(think_loop)
         self.remove(think_loop.circle_group)
@@ -164,7 +184,7 @@ class ContextWindowAnimation(Scene):
         self.wait(0.5)
 
         # --- Turn 3 - Middle Row ---
-        turn3_group = create_prompt_response("Prompt 3\n(15k tokens)", "Response 3\n(50k tokens)") # No position argument
+        turn3_group = create_prompt_response(r"Prompt 3\\(15k tokens)", r"Response 3\\(50k tokens)") # No position argument
         self.play(Write(turn3_group[0:2]), Create(turn3_group[4]), run_time=0.5)
         self.play(think_loop)
         self.remove(think_loop.circle_group)

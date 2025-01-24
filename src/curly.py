@@ -89,7 +89,10 @@ class CurlyBraceTransformation(Scene):
 
         small_brace_top = Tex(r"\{\_\}", color=BLACK).scale(1.5)
         small_brace_top.move_to(LEFT * 2 + UP * 2.5)
-        prompt_top = Text("Prompt", color=BLACK, font="Helvetica").next_to(small_brace_top, DOWN, buff=0.5)
+        prompt_top = Tex(r"\textbf{Prompt}", color=BLACK, 
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                         tex_environment="flushleft",
+                         font_size=50).next_to(small_brace_top, DOWN, buff=0.5)
         neural2 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
         neural2.move_to([3.1, 3, 0])
         neural3 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
@@ -98,11 +101,19 @@ class CurlyBraceTransformation(Scene):
         input.move_to([-5, 0, 0])
         rect = RoundedRectangle(height=5, width=3.5, corner_radius=0.2, color=rect_color, fill_opacity=1)
         rect.move_to([-5, -.2, 0])
-        thinking = MarkupText("User thinking\nat 10 bits / second", font="Helvetica", color=BLACK, font_size=28).next_to(input, DOWN, buff=0.5)
+        thinking = Tex(r"User thinking\\at 10 bits / second", 
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                         tex_environment="flushleft",
+                         font_size=38,
+                         color=BLACK).next_to(input, DOWN, buff=0.5)
 
         large_brace_top = Tex(r"\{\_\}", color=BLACK).scale(5)
         large_brace_top.move_to(RIGHT * 3 + UP * 2.5)
-        response_top = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_top, DOWN, buff=0.5) # Renamed to "LLM Response 1"
+        response_top = Tex(r"\textbf{LLM Response}",
+                           tex_template=TexFontTemplates.helvetica_fourier_it,
+                           tex_environment="flushleft",
+                           font_size=50,
+                           color=BLACK).next_to(large_brace_top, DOWN, buff=0.5) # Renamed to "LLM Response 1"
 
         arrow_top = Arrow(
             start=small_brace_top.get_right(),
@@ -114,11 +125,18 @@ class CurlyBraceTransformation(Scene):
         # Second set of braces (bottom)
         small_brace_bottom = Tex(r"\{\_\}", color=BLACK).scale(1.5)
         small_brace_bottom.move_to(LEFT * 2 + DOWN * 1.5)
-        prompt_bottom = Text("Prompt", color=BLACK, font="Helvetica").next_to(small_brace_bottom, DOWN, buff=0.5) # More descriptive prompt 2
+        prompt_bottom = Tex(r"\textbf{Prompt}", color=BLACK, 
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                         tex_environment="flushleft",
+                         font_size=50).next_to(small_brace_bottom, DOWN, buff=0.5) # More descriptive prompt 2
 
         large_brace_bottom = Tex(r"\{\_\}", color=BLACK).scale(4.5)
         large_brace_bottom.move_to(RIGHT * 3 + DOWN * 1.5)
-        response_bottom = Text("LLM Response", color=BLACK, font="Helvetica").next_to(large_brace_bottom, DOWN, buff=0.5) # Renamed to "LLM Response 2"
+        response_bottom = Tex(r"\textbf{LLM Response}",
+                           tex_template=TexFontTemplates.helvetica_fourier_it,
+                           tex_environment="flushleft",
+                           font_size=50,
+                           color=BLACK).next_to(large_brace_bottom, DOWN, buff=0.5) # Renamed to "LLM Response 2"
 
         arrow_bottom = Arrow(
             start=small_brace_bottom.get_right(),
@@ -151,7 +169,7 @@ class CurlyBraceTransformation(Scene):
             Write(large_brace_top),
             Create(response_top),
             FadeIn(neural2),
-            run_time=2
+            run_time=.5
         )
 
 
