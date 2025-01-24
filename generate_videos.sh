@@ -17,3 +17,6 @@ RENDERING_MODE=True uv run manim  --resolution "1280,720" src/filter.py FilterAn
 RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/tokenwindow.py ContextWindowAnimation
 cp media/videos/tokenwindow/200p60/ContextWindowAnimation_ManimCE_v0.18.1.gif ./assets/tokenwindow.gif
 RENDERING_MODE=True uv run manim  --resolution "1280,720" src/tokenwindow.py ContextWindowAnimation
+RENDERING_MODE=True uv run manim -r 320,200 --format=gif src/programmer-loading.py IdeaLoadingAnimation
+cp media/videos/programmer-loading/200p60/IdeaLoadingAnimation_ManimCE_v0.18.1.gif ./assets/programmer-loading.gif
+RENDERING_MODE=True uv run manim  --resolution "1280,720" src/programmer-loading.py IdeaLoadingAnimation

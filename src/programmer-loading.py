@@ -14,9 +14,10 @@ class IdeaLoadingAnimation(Scene):
         # Set the background color
         self.camera.background_color = WHITE
         rect_color = ManimColor((241, 172, 75))
-        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([0, 0, 0])
+        neural_rect_color = ManimColor((158, 162, 184))
+        input_svg = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(.75).move_to([-2, 0, 0])
         rect = RoundedRectangle(height=5, width=3.5, corner_radius=0.2, color=rect_color, fill_opacity=1)
-        rect.move_to([0, -0.2, 0])
+        rect.move_to([-2, -0.2, 0])
         thinking = MarkupText("Programmer\ngathering context\nfor task", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
         ready = MarkupText("Ready\nfor work", font="Helvetica", color=BLACK, font_size=24).next_to(input_svg, DOWN, buff=0.5)
         

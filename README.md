@@ -58,6 +58,10 @@ class AnimationGroup(Animation):
 
 [![Mind Filter](./assets/filter.gif)](./src/filter.py)
 
+## Programmer Context
+
+[![Programmer Context](./assets/programmer-loading.gif)](./src/programmer-loading.py)
+
 ## Prompt Feedback Loop
 
 [![Curly Loop](./assets/curly.gif)](./src/curly.py)
