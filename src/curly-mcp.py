@@ -107,6 +107,14 @@ class CurlyBraceTransformation(ZoomedScene):
                          font_size=50).next_to(small_brace_top, DOWN, buff=0.5)
         neural2 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
         neural2.move_to([3.1, 3, 0])
+        mcp = ImageMobject(f"{asset_folder}/mcp.png").scale(0.25)
+        mcp.move_to([8.1, 4.5, 0])
+        docs = SVGMobject(f"{asset_folder}/docs.svg").scale(0.3)
+        docs.move_to([7.1, 3.5, 0])
+        map = SVGMobject(f"{asset_folder}/map.svg").scale(0.3)
+        map.move_to([7.1, 2.5, 0])
+        search = SVGMobject(f"{asset_folder}/search.svg").scale(0.3)
+        search.move_to([7.1, 1.5, 0])
         neural3 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
         neural3.move_to([3.1, -1.1, 0])
         input = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(1).stretch(factor=-1, dim=0)
@@ -186,10 +194,25 @@ class CurlyBraceTransformation(ZoomedScene):
 
         self.play(
             self.camera.frame.animate.scale(1.4).move_to([2.7, 0, 0]),
-
         )
 
+        self.play(
+            FadeIn(mcp),
+            FadeIn(docs),
+            FadeIn(map),
+            FadeIn(search),
+            run_time=.5
+        )
+        arrow2 = DoubleArrow(large_brace_top.get_right() * [.9, 0, 0] + [0, 3.0, 0], docs.get_left(), color=BLACK)
+        arrow3 = DoubleArrow(large_brace_top.get_right() * [1, 0, 0] + [0, 2.5, 0], map.get_left(), color=BLACK)
+        arrow1 = DoubleArrow(large_brace_top.get_right() * [.9, 0, 0] + [0, 2, 0], search.get_left(), color=BLACK)
 
+        self.play(
+            Create(arrow1),
+            Create(arrow2),
+            Create(arrow3),
+            run_time=.5
+        )
         self.play(second_think_loop)
         self.remove(second_think_loop.circle_group)
         self.play(
