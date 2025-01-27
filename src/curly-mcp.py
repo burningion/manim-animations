@@ -105,16 +105,52 @@ class CurlyBraceTransformation(ZoomedScene):
                          tex_template=TexFontTemplates.helvetica_fourier_it,
                          tex_environment="flushleft",
                          font_size=50).next_to(small_brace_top, DOWN, buff=0.5)
+        docs1 = SVGMobject(f"{asset_folder}/docs.svg").scale(0.3)
+        docs1.move_to([7.1, -.5, 0])
+        docs_desc1 = Tex(r"Documents", 
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                         tex_environment="flushleft",
+                         font_size=38,
+                         color=BLACK).next_to(docs1, RIGHT, buff=0.5)
+        map1 = SVGMobject(f"{asset_folder}/map.svg").scale(0.3)
+        map1.move_to([7.1, -1.6, 0])
+        map_desc1 = Tex(r"Maps",
+                        tex_template=TexFontTemplates.helvetica_fourier_it,
+                        tex_environment="flushleft",
+                        font_size=38,
+                        color=BLACK).next_to(map1, RIGHT, buff=0.5)
+        search1 = SVGMobject(f"{asset_folder}/search.svg").scale(0.3)
+        search1.move_to([7.1, -2.7, 0])
+        search_desc1 = Tex(r"Search",
+                          tex_template=TexFontTemplates.helvetica_fourier_it,
+                          tex_environment="flushleft",
+                          font_size=38,
+                          color=BLACK).next_to(search1, RIGHT, buff=0.5)
         neural2 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
         neural2.move_to([3.1, 3, 0])
         mcp = ImageMobject(f"{asset_folder}/mcp.png").scale(0.25)
         mcp.move_to([8.1, 4.5, 0])
         docs = SVGMobject(f"{asset_folder}/docs.svg").scale(0.3)
         docs.move_to([7.1, 3.5, 0])
+        docs_desc = Tex(r"Documents", 
+                         tex_template=TexFontTemplates.helvetica_fourier_it,
+                         tex_environment="flushleft",
+                         font_size=38,
+                         color=BLACK).next_to(docs, RIGHT, buff=0.5)
         map = SVGMobject(f"{asset_folder}/map.svg").scale(0.3)
         map.move_to([7.1, 2.5, 0])
+        map_desc = Tex(r"Maps",
+                        tex_template=TexFontTemplates.helvetica_fourier_it,
+                        tex_environment="flushleft",
+                        font_size=38,
+                        color=BLACK).next_to(map, RIGHT, buff=0.5)
         search = SVGMobject(f"{asset_folder}/search.svg").scale(0.3)
         search.move_to([7.1, 1.5, 0])
+        search_desc = Tex(r"Search",
+                          tex_template=TexFontTemplates.helvetica_fourier_it,
+                          tex_environment="flushleft",
+                          font_size=38,
+                          color=BLACK).next_to(search, RIGHT, buff=0.5)
         neural3 = SVGMobject(f"{asset_folder}/neural2.svg").scale(0.5)
         neural3.move_to([3.1, -1.1, 0])
         input = SVGMobject(f"{asset_folder}/perceptionw1.svg").scale(1).stretch(factor=-1, dim=0)
@@ -201,11 +237,18 @@ class CurlyBraceTransformation(ZoomedScene):
             FadeIn(docs),
             FadeIn(map),
             FadeIn(search),
+            FadeIn(docs_desc),
+            FadeIn(map_desc),
+            FadeIn(search_desc),
             run_time=.5
         )
         arrow2 = DoubleArrow(large_brace_top.get_right() * [.9, 0, 0] + [0, 3.0, 0], docs.get_left(), color=BLACK)
         arrow3 = DoubleArrow(large_brace_top.get_right() * [1, 0, 0] + [0, 2.5, 0], map.get_left(), color=BLACK)
         arrow1 = DoubleArrow(large_brace_top.get_right() * [.9, 0, 0] + [0, 2, 0], search.get_left(), color=BLACK)
+
+        arrow4 = DoubleArrow(large_brace_bottom.get_right() * [.9, 0, 0] + [0, -1.1, 0], docs1.get_left(), color=BLACK)
+        arrow5 = DoubleArrow(large_brace_bottom.get_right() * [1, 0, 0] + [0, -1.6, 0], map1.get_left(), color=BLACK)
+        arrow6 = DoubleArrow(large_brace_bottom.get_right() * [.9, 0, 0] + [0, -2.1, 0], search1.get_left(), color=BLACK)
 
         self.play(
             Create(arrow1),
@@ -257,6 +300,21 @@ class CurlyBraceTransformation(ZoomedScene):
             run_time=.5
         )
 
+        self.play(
+            FadeIn(docs1),
+            FadeIn(map1),
+            FadeIn(search1),
+            FadeIn(docs_desc1),
+            FadeIn(map_desc1),
+            FadeIn(search_desc1),
+            run_time=.5
+        )
+        self.play(
+            Create(arrow4),
+            Create(arrow5),
+            Create(arrow6),
+            run_time=.5
+        )
         self.play(third_think_loop)
         self.remove(third_think_loop.circle_group)
         self.play(
