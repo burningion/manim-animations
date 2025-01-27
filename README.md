@@ -66,6 +66,10 @@ class AnimationGroup(Animation):
 
 [![Curly Loop](./assets/curly.gif)](./src/curly.py)
 
+## Prompt Feedback Loop w/ Model Context Protocol
+
+[![Curly Loop w/ MCP](./assets/curly-mcp.gif)](./src/curly-mcp.py)
+
 ## Shrinking Token Window
 
 [![Token Window](./assets/tokenwindow.gif)](./src/tokenwindow.py)
